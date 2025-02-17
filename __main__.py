@@ -1,5 +1,9 @@
 from include import *
 
+welcome_message:str = open("./static/welcome.md",mode="r").read()
+
+is_root:bool=os.geteuid() == 0
+
 class InfinitySnapshotManager(App):
     CSS="""
     Header{
@@ -9,6 +13,10 @@ class InfinitySnapshotManager(App):
         width:100%;
         height:3;
         margin-top:0;
+    }
+    Container{
+        width:100%;
+        height:auto;
     }
     """
     ENABLE_COMMAND_PALETTE=False
@@ -47,15 +55,19 @@ class InfinitySnapshotManager(App):
         # Compose the UI
         yield Header("The Infinity's SnapShot Manager")
         yield Tabs(id="menu-tab")
+        with Container(id="welcome-window"):
+            yield Markdown(welcome_message)
+        with Container(id="update-system"):
+            yield Button("Update System",id="update-system-button")
         yield Footer()
     def action_quit_app(self) -> None:
         self.exit(0)
 
 # Run the application
 if __name__ == "__main__":
-    euid = os.geteuid()
-    if euid!=0:
+    if not is_root:
+        print("Warning:")
         print("This App must be run as root.")
-        sys.exit(1)
+        sleep(1)
     app = InfinitySnapshotManager()
     app.run()
