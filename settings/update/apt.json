@@ -1,4 +1,0 @@
-{
-    "update_cmd":"apt update",
-    "upgrade_cmd":"apt upgrade -y"
-}
