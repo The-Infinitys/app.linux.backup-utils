@@ -6,5 +6,5 @@ from library import manage, git_utils, textual, textual_utils, terminal
 from library.textual.textual.binding import Binding
 from library.textual.textual.app import App, ComposeResult
 from library.textual.textual.color import Gradient, Color
-from library.textual.textual.widgets import Header, Static, ProgressBar, Footer
+from library.textual.textual.widgets import *
 from library.textual.textual.theme import Theme

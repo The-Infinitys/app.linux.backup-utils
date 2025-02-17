@@ -9,6 +9,7 @@ class InfinitySnapshotManager(App):
     def compose(self) -> ComposeResult:
         # Compose the UI
         yield Header("The Infinity's SnapShot Manager")
+        yield Button("Update System")
         yield Footer()        
     def on_mount(self) -> None:
         # Initialize the theme
@@ -37,6 +38,10 @@ class InfinitySnapshotManager(App):
         self.exit(0)
 
 # Run the application
-if __name__ == "__main__":  
+if __name__ == "__main__":
+    euid = os.geteuid()
+    if euid!=0:
+        print("This App must be run as root.")
+        sys.exit(1)
     app = InfinitySnapshotManager()
     app.run()
