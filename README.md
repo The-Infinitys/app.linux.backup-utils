@@ -1,1 +1,1 @@
-# app.linux.backup-utils
+# Infinity SnapShot Manager
