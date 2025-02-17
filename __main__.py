@@ -33,7 +33,6 @@ class InfinitySnapshotManager(App):
         # Register the theme
         self.register_theme(infinite_theme)
         self.theme = "infinite"
-
     def action_quit_app(self) -> None:
         self.exit(0)
 
