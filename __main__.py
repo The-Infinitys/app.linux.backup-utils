@@ -3,24 +3,9 @@ from include import *
 welcome_message:str = open("./static/welcome.md",mode="r").read()
 is_root:bool=os.geteuid() == 0
 
-def update_process(log_elem:Log):
-    log_elem.write("Updating...")
-    update_cmds=manage.setting["update-cmds"]
-    log_elem.write("Update With Commands:\n")
-    sleep(1)
-    for update_cmd in update_cmds:
-        log_elem.write(" "*4 + update_cmd + "\n")
-    for update_cmd in update_cmds:
-        process=terminal.background(update_cmd)
-        while process.is_in_progress:
-            log_elem.clear()
-            log_elem.write("Hello!\n")
-            sleep(0.1)
 menus=[
     ["SnapShot Manager - Welcome","welcome-window"],
-    ["Update System","update-system"],
     ["SnapShot System","snapshot"],
-    ["Edit SnapShot","edit"]
     ]
 
 class InfinitySnapshotManager(App):
@@ -37,15 +22,7 @@ class InfinitySnapshotManager(App):
         width:100%;
         height:auto;
     }
-    Log#update-log{
-        border:heavy white;
-        margin-top:1;
-        margin-left:1;
-        margin-right:1;
-        margin-bottom:1;
-        height:20;
-    }
-    Button#update-system-button{
+    Static.h1{
         border:heavy white;
     }
     """
@@ -87,8 +64,7 @@ class InfinitySnapshotManager(App):
         with Container(id=menus[0][1], classes="window"):
             yield Markdown(welcome_message)
         with Container(id=menus[1][1], classes="window"):
-            yield Button("Update System",id="update-system-button")
-            yield Log(id="update-log",auto_scroll=True)
+            yield Static("SnapShots",classes="h1")
         yield Footer()
     def on_tabs_tab_activated(self, event: Tabs.TabActivated) -> None:
         if event.tabs.id=="menu-tab":
@@ -104,13 +80,7 @@ class InfinitySnapshotManager(App):
                 else:
                     container.styles.display="none"
     def on_button_pressed(self, event:Button.Pressed) -> None:
-        if event.button.id=="update-system-button":
-            """Update System"""
-            log_elem=self.query_one("Log#update-log")
-            event.button.disabled=True
-            update_thread=threading.Thread(target=update_process,args=(log_elem,event.button),name="update-thread")
-            update_thread.start()
-            event.button.disable=False
+        pass
     def action_quit_app(self):
         self.exit(0)
 # Run the application
